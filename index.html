@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    :root {
+      --sunflower-center: #3e2723;
+      --petal-color: #ffca28;
+      
+      /* Sunflower Sizes */
+      --sf-xl: 220px;
+      --sf-lg: 160px; 
+      --sf-md: 110px; 
+      --sf-sm: 75px;
+      --sf-xs: 50px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* HEADER TEXT ABOVE ENVELOPE */
+    .special-day-header {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #4a2c35;
+      margin-bottom: 25px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
+      animation: fadeInDown 1s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease, height 0.5s ease, margin 0.5s ease;
+      opacity: 1;
+      transform: translateY(0);
+      height: 40px;
+      overflow: hidden;
+      z-index: 15;
+    }
+
+    .container.open .special-day-header {
+      opacity: 0;
+      transform: translateY(-20px);
+      height: 0;
+      margin-bottom: 0;
+      pointer-events: none;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =======================================
+       1. BACKGROUND SUNFLOWER FIELD (20 Sunflowers)
+       ======================================= */
+    .background-field {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sunflower-head {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0) rotate(-45deg);
+      transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.27), opacity 0.8s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .center {
+      position: absolute;
+      width: 45%;
+      height: 45%;
+      background-color: var(--sunflower-center);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    .petals {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: rotateSlow 30s linear infinite;
+    }
+
+    .petal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16%;
+      height: 48%;
+      background: linear-gradient(to top, #fbc02d, var(--petal-color));
+      border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+      margin-left: -8%; 
+      transform-origin: center bottom;
+      margin-top: -48%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* 12 Petals Spacing */
+    .petal:nth-child(1)  { transform: rotate(0deg); }
+    .petal:nth-child(2)  { transform: rotate(30deg); }
+    .petal:nth-child(3)  { transform: rotate(60deg); }
+    .petal:nth-child(4)  { transform: rotate(90deg); }
+    .petal:nth-child(5)  { transform: rotate(120deg); }
+    .petal:nth-child(6)  { transform: rotate(150deg); }
+    .petal:nth-child(7)  { transform: rotate(180deg); }
+    .petal:nth-child(8)  { transform: rotate(210deg); }
+    .petal:nth-child(9)  { transform: rotate(240deg); }
+    .petal:nth-child(10) { transform: rotate(270deg); }
+    .petal:nth-child(11) { transform: rotate(300deg); }
+    .petal:nth-child(12) { transform: rotate(330deg); }
+
+    @keyframes rotateSlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* 20 Sunflower Positions & Animations */
+    #sf1  { width: var(--sf-xl); height: var(--sf-xl); top: 2%;  left: 2%;   transition-delay: 0.1s; }
+    #sf2  { width: var(--sf-lg); height: var(--sf-lg); top: 5%;  right: 4%;  transition-delay: 0.3s; }
+    #sf3  { width: var(--sf-sm); height: var(--sf-sm); top: 40%; right: 8%;   transition-delay: 0.5s; }
+    #sf4  { width: var(--sf-md); height: var(--sf-md); bottom: 5%; right: 5%; transition-delay: 0.7s; }
+    #sf5  { width: var(--sf-lg); height: var(--sf-lg); bottom: 4%; left: 4%;  transition-delay: 0.9s; }
+    #sf6  { width: var(--sf-sm); height: var(--sf-sm); top: 45%; left: 6%;   transition-delay: 1.1s; }
+    #sf7  { width: var(--sf-md); height: var(--sf-md); top: 12%; right: 24%; transition-delay: 0.4s; }
+    #sf8  { width: var(--sf-sm); height: var(--sf-sm); bottom: 15%; left: 25%; transition-delay: 0.8s; }
+    #sf9  { width: var(--sf-md); height: var(--sf-md); bottom: 10%; right: 28%; transition-delay: 1.0s; }
+    #sf10 { width: var(--sf-sm); height: var(--sf-sm); top: 10%; left: 24%;  transition-delay: 0.2s; }
+    
+    #sf11 { width: var(--sf-xs); height: var(--sf-xs); top: 28%; left: 18%;  transition-delay: 0.35s; }
+    #sf12 { width: var(--sf-md); height: var(--sf-md); top: 2%;  left: 45%;  transition-delay: 0.6s; }
+    #sf13 { width: var(--sf-xs); height: var(--sf-xs); top: 25%; right: 18%; transition-delay: 0.85s; }
+    #sf14 { width: var(--sf-sm); height: var(--sf-sm); bottom: 28%; right: 18%; transition-delay: 0.45s; }
+    #sf15 { width: var(--sf-lg); height: var(--sf-lg); bottom: 2%; left: 48%; transition-delay: 1.05s; }
+    #sf16 { width: var(--sf-xs); height: var(--sf-xs); bottom: 25%; left: 16%; transition-delay: 0.15s; }
+    #sf17 { width: var(--sf-sm); height: var(--sf-sm); top: 62%; left: 3%;   transition-delay: 0.75s; }
+    #sf18 { width: var(--sf-xs); height: var(--sf-xs); top: 65%; right: 4%;  transition-delay: 0.95s; }
+    #sf19 { width: var(--sf-md); height: var(--sf-md); top: 22%; left: 2%;   transition-delay: 0.25s; }
+    #sf20 { width: var(--sf-sm); height: var(--sf-sm); top: 20%; right: 2%;  transition-delay: 0.65s; }
+
+    /* =======================================
+       2. ELEGANT CARD STYLING & PAGINATION
+       ======================================= */
+    .card {
+      width: 380px;
+      height: 480px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      z-index: 10;
+    }
+
+    .cover-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 0.4s ease;
+    }
+
+    .prompt-text {
+      font-size: 1.15rem;
+      color: #555;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      animation: pulse 1.5s infinite;
+    }
+
+    .envelope-icon {
+      font-size: 3.5rem;
+      margin-top: 10px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.98); }
+    }
+
+    /* Message Interior Container */
+    .message-container {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header-title {
+      font-size: 1.8rem;
+      color: #d81b60;
+      font-family: 'Georgia', serif;
+      margin-bottom: 10px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .pages-wrapper {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .page.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .page.exit-left {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+
+    .page p {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .card-footer-sunflower {
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+
+    /* Pagination Controls */
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: 10px;
+    }
+
+    .nav-btn {
+      background: #ff4081;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: #e91e63;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .page-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #ff4081;
+      transform: scale(1.3);
+    }
+
+    /* Animation Triggers when opened */
+    .container.open .cover-content {
+      display: none;
+    }
+
+    .container.open .message-container {
+      display: flex;
+    }
+
+    .container.open .background-field .sunflower-head {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Container -->
+  <div class="container" id="mainContainer">
+    
+    <!-- Title Header -->
+    <div class="special-day-header">
+      Today is September 10, your Special day ✨
+    </div>
+
+    <!-- Interactive Card -->
+    <div class="card" id="birthdayCard">
+      <!-- Cover Content -->
+      <div class="cover-content" id="coverContent">
+        <div class="prompt-text">Click to open your letter 💌</div>
+        <div class="envelope-icon">✉️</div>
+      </div>
+
+      <!-- Paginated Message Content -->
+      <div class="message-container" id="messageContainer">
+        <h1 class="card-header-title">Happy Birthday! 🎉</h1>
+
+        <div class="pages-wrapper">
+          <!-- Page 1 -->
+          <div class="page active" data-page="0">
+            <p>
+              Happy Birthday! 🎉💗<br><br>
+              I just want to take this opportunity to say how grateful I am that we became friends. It’s already been one year since we started this friendship, and honestly, I’m really happy that I got to know someone like you. 
+              In just one year, we’ve shared so many memories, laughs, random conversations, and moments that I’ll always appreciate.<br><br>
+            </p>
+          </div>
+
+          <!-- Page 2 -->
+          <div class="page" data-page="1">
+            <p>
+              Thank you for being there, for listening, for understanding, and simply for being yourself.
+              I may not always say it, but I truly value our friendship and all the little moments we’ve shared. 
+              You’ve become someone important to me, and I hope you know how much I appreciate having you in my life. 
+              As you celebrate another year of your life, I hope you receive all the happiness, love, and success you deserve. 
+            </p>
+          </div>
+
+          <!-- Page 3 -->
+          <div class="page" data-page="2">
+            <p>
+              Keep chasing your dreams, keep smiling, and never forget how amazing you are. I hope this birthday brings you many beautiful memories and new reasons to be happy.
+              One year of friendship down, and hopefully many, many more years to come. 🥹❤️ I’m looking forward to all the future memories, adventures, conversations, and stupid things we’ll probably do together.
+            </p>
+            <div class="card-footer-sunflower">🌻 💛</div>
+          </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="pagination-controls">
+          <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
+          
+          <div class="page-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+          </div>
+
+          <button class="nav-btn" id="nextBtn">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Sunflower Field (20 Sunflowers) -->
+    <div class="background-field">
+      <div class="sunflower-head" id="sf1"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf2"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf3"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf4"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf5"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf6"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf7"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf8"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf9"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf10"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf11"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf12"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf13"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf14"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf15"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf16"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf17"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf18"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf19"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+      <div class="sunflower-head" id="sf20"><div class="center"></div><div class="petals"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div></div></div>
+    </div>
+
+  </div>
+
+  <script>
+    const container = document.getElementById('mainContainer');
+    const coverContent = document.getElementById('coverContent');
+    const pages = document.querySelectorAll('.page');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentPage = 0;
+    let isOpen = false;
+
+    // Open card when clicking the cover
+    coverContent.addEventListener('click', () => {
+      if (!isOpen) {
+        container.classList.add('open');
+        isOpen = true;
+      }
+    });
+
+    // Function to update current page and controls
+    function updatePagination() {
+      pages.forEach((page, index) => {
+        page.classList.remove('active', 'exit-left');
+        if (index === currentPage) {
+          page.classList.add('active');
+        } else if (index < currentPage) {
+          page.classList.add('exit-left');
+        }
+      });
+
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentPage);
+      });
+
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+    }
+
+    // Button Listeners
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        updatePagination();
+      }
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentPage > 0) {
+        currentPage--;
+        updatePagination();
+      }
+    });
+
+    // Dot Click Listeners
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentPage = parseInt(dot.getAttribute('data-index'));
+        updatePagination();
+      });
+    });
+  </script>
+
+</body>
+</html>
